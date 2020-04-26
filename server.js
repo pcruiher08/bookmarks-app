@@ -34,7 +34,6 @@ let bookmarksList = [
 ]
 
 app.get('/bookmarks', (req, res) =>{
-  console.log("Getting all bookmarks");
   return res.status(200).json(bookmarksList);
 });
 
@@ -60,6 +59,53 @@ app.get('/bookmark', (req, res) => {
   return res.status(200).json(result);
 });
 
+app.patch('/bookmark/:id',jsonParser, (req, res) =>{
+
+	let id = req.body.id;
+	let parameters = req.params.id;
+  
+	if (!id){
+	  res.statusMessage = "please send an id";
+	  return res.status(406).end();
+	}
+  
+  
+	if(id != parameters){
+	  res.statusMessage = "id not valid";
+	  return res.status(409).end();
+	}
+  
+  
+	let foundBookmark = bookmarksList.findIndex((bookmark) =>{
+	  if(bookmark.id == id){
+		return true;
+	  }
+	});
+  
+	if(foundBookmark < 0){
+	  res.statusMessage = "id not found"
+	  return res.status(404).end();
+	}
+  
+	if(req.body.title){
+	  bookmarksList[foundBookmark].title = req.body.title;
+	}
+  
+	if(req.body.description){
+	  bookmarksList[foundBookmark].description = req.body.description;
+	}
+  
+	if(req.body.url){
+	  bookmarksList[foundBookmark].url = req.body.url;
+	}
+  
+	if(req.body.rating){
+	  bookmarksList[foundBookmark].rating = req.body.rating;
+	}
+  
+	return res.status(202).json(bookmarksList[foundBookmark]); 
+  
+  });
 
 app.post('/bookmarks', jsonParser, (req, res) =>{
   console.log("body", req.body);
@@ -140,53 +186,6 @@ app.delete('/bookmark/:id',  (req, res) =>{
   }
 });
 
-app.patch('/bookmark/:id',jsonParser, (req, res) =>{
-
-  let id = req.body.id;
-  let parameters = req.params.id;
-
-  if (!id){
-    res.statusMessage = "please send an id";
-    return res.status(406).end();
-  }
-
-
-  if(id != parameters){
-    res.statusMessage = "id not valid";
-    return res.status(409).end();
-  }
-
-
-  let foundBookmark = bookmarksList.findIndex((bookmark) =>{
-    if(bookmark.id == id){
-      return true;
-    }
-  });
-
-  if(foundBookmark < 0){
-    res.statusMessage = "id not found"
-    return res.status(404).end();
-  }
-
-  if(req.body.title){
-    bookmarksList[foundBookmark].title = req.body.title;
-  }
-
-  if(req.body.description){
-    bookmarksList[foundBookmark].description = req.body.description;
-  }
-
-  if(req.body.url){
-    bookmarksList[foundBookmark].url = req.body.url;
-  }
-
-  if(req.body.rating){
-    bookmarksList[foundBookmark].rating = req.body.rating;
-  }
-
-  return res.status(202).json(bookmarksList[foundBookmark]); 
-
-});
 
 app.listen(8080,() => {
     console.log("running in port 8080");
