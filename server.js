@@ -40,8 +40,6 @@ app.get('/bookmarks', (req, res) =>{
 app.get('/bookmark', (req, res) => {
   let title = req.query.title;
 
-  console.log("all bookmarks =", title);
-
   if(!title){
     res.statusMessage = "no title provided"
     return res.status(406).end();
@@ -108,7 +106,6 @@ app.patch('/bookmark/:id',jsonParser, (req, res) =>{
   });
 
 app.post('/bookmarks', jsonParser, (req, res) =>{
-  console.log("body", req.body);
   let id = uuid.v4();
   let title = req.body.title;
   let description = req.body.description
