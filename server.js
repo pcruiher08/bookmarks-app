@@ -132,7 +132,7 @@ app.delete('/bookmark/:id',  (req, res) =>{
   });
 
   if(foundBookmark < 0){
-    res.statusMessage = "That id was not found in the bookmarks list"
+    res.statusMessage = "id not found"
     return res.status(404).end();
   }else{
     bookmarksList.splice(foundBookmark, 1);
