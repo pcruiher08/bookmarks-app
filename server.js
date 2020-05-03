@@ -20,22 +20,6 @@ function middleware (req, res, next){
 
 let params = {};
 
-let bookmarksList = [
-  {
-    id: uuid.v4(),
-    title: 'Facebook',
-    description: 'Social Media',
-    url: 'https://www.facebook.com/',
-    rating: 3
-  },
-  {
-    id: uuid.v4(),
-    title: 'Juegos',
-    description: 'Computer games',
-    url: 'https://www.juegos.com/',
-    rating: 5
-  }
-]
 
 app.get('/bookmarks', (req, res) =>{
   Bmarks.getAllBookmarks().then(result => {
@@ -198,7 +182,7 @@ app.post('/bookmarks', jsonParser, (req, res) =>{
     rating: rating
   };
 
-  Bookmarks.createBookmark(newBookmark).then(result=>{
+  Bmarks.createBookmark(newBookmark).then(result=>{
     return res.status(201).json(result);
   }).catch(err=>{
     res.statusMessage = 'database failure'; //might add a message later

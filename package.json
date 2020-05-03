@@ -11,8 +11,9 @@
   "license": "ISDR",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "mongoose": "^5.9.11",
     "express": "^4.17.1",
+    "mongodb": "^3.5.7",
+    "mongoose": "^5.9.11",
     "morgan": "^1.10.0",
     "uuid": "^7.0.3"
   }
